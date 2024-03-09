@@ -41,13 +41,13 @@ function create_drawing() {
             color,
             previus_position
         };
-        show_drawing(drawing);
+        socket.emit('drawing',drawing);
     }
     previus_position = {x_position, y_position};
     setTimeout(create_drawing,25);
 }
 
-function show_drawing(drawing) {
+socket.on('show_drawing', (drawing) => {
     context.beginPath();
     context.lineWidth = 3;
     context.strokeStyle = drawing.color;
@@ -57,6 +57,6 @@ function show_drawing(drawing) {
         drawing.previus_position.y_position
     );
     context.stroke();
-}
+});
 
 create_drawing();
