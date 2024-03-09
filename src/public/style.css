@@ -22,6 +22,13 @@ canvas{
     outline: none;
 }
 
+.delete{
+    position:absolute;
+    top:5px;
+    padding: 10px;
+    margin-left: 170px;
+}
+
 #color1{
     background-color: red;
 }
@@ -36,4 +43,10 @@ canvas{
 }
 #color5{
     background-color: black;
+}
+#btn_delete{
+    width: 30PX;
+    height: 30px;
+    border-color:#000;
+    color: red;
 }

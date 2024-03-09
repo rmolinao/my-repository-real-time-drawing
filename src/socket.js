@@ -6,10 +6,16 @@ module.exports = (io) => {
         data.forEach( fact => {
             io.emit('show_drawing', fact);
         });
+        socket.on('delete', () => {
+
+            data = [];
+            io.emit('show_drawing', null);
+        });
         // trasmites el evento a los  usuarios nuevos ya conectados
         socket.on('drawing', (drawing) => {
             data.push(drawing);
             io.emit('show_drawing', drawing);
         });
+
     });
 }

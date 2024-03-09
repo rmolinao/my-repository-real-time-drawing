@@ -7,12 +7,12 @@ let previus_position = null;
 let color = 'black';
 
 const canvas = document.getElementById('canvas');
+const btn_delete = document.getElementById('btn_delete');
+const colors = document.querySelector('.colors');
 const context = canvas.getContext('2d');
 
 const width  = window.innerWidth;
 const height = window.innerHeight;
-console.log(window.innerHeight);
-console.log(window.innerWidth);
 
 canvas.width = width;
 canvas.height = height;
@@ -31,8 +31,25 @@ canvas.addEventListener('mousemove', event => {
     y_position = event.clientY;
 });
 
+btn_delete.addEventListener('click', event => {
+    event.preventDefault();
+    socket.emit('delete');
+});
 
-
+colors.addEventListener('click', event => {
+    event.preventDefault();
+    if (event.target.tagName == 'BUTTON') {
+        let element = event.target;
+        let estilos = element.computedStyleMap();
+        let color = estilos.get("background-color").toString();
+        chage_color(color);
+    }
+});
+function chage_color(p_color) {
+    color = p_color;
+    context.strokeStyle = color;
+    context.stroke();
+}
 function create_drawing() {
     if (click && moving_mouse && previus_position != null) {
         let drawing = {
@@ -47,7 +64,11 @@ function create_drawing() {
     setTimeout(create_drawing,25);
 }
 
-socket.on('show_drawing', (drawing) => {
+socket.on('show_drawing', drawing => {
+    if (drawing == null) {
+        context.clearRect(0, 0, canvas.width, canvas.height);
+        return;
+    }
     context.beginPath();
     context.lineWidth = 3;
     context.strokeStyle = drawing.color;
