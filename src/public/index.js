@@ -9,6 +9,7 @@ let color = 'black';
 const canvas = document.getElementById('canvas');
 const btn_delete = document.getElementById('btn_delete');
 const colors = document.querySelector('.colors');
+const users = document.querySelector('.users');
 const context = canvas.getContext('2d');
 
 const width  = window.innerWidth;
@@ -78,6 +79,10 @@ socket.on('show_drawing', drawing => {
         drawing.previus_position.y_position
     );
     context.stroke();
+});
+
+socket.on('users',  (number) => {
+    users.innerHTML = `Numero de usuarios conectados: ${number}`;
 });
 
 create_drawing();
